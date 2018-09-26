@@ -13,4 +13,3 @@ e2e/**/*.js.map
 _test-output
 _temp
 .DS_Store
-package-lock.json
