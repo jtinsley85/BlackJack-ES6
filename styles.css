@@ -1,0 +1,63 @@
+body,
+html {
+  height: 100%;
+}
+.bg {
+  background-image: url("src/assets/BlackJack-2.png");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+}
+
+.page-header {
+  padding-bottom: .75em;
+  padding-top: .5em;
+  padding-left: 1em;
+  border-bottom: .083em solid rgb(182, 182, 182);
+  line-height: .5em;
+  /* color: white */
+}
+#start-stop {
+  margin-bottom: 2em;
+  margin-top: .833em;
+  margin-left: 1em;
+}
+
+.gameWelcome {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.gameText {
+  padding-left: 6em;
+  padding-right: 6em;
+  font-size: .85em ;
+}
+
+/* #game {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+} */
+
+.grayBg {
+  background-color:rgba(118, 112, 112, 0.584);
+  height: 30em;
+  width: 28em;
+  /* margin-left: 1em; */
+  border: .167em solid rgb(182, 182, 182);
+  line-height: 1.3em;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
