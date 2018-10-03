@@ -1,13 +1,21 @@
+
+/* 
+  Most of the Classes listed here are code snippits I stole from other
+  versions of Bootstrap but primarily ID's are used for original styling.
+
+  Default values are em's and percents unless otherwise necessary to 
+  maintain responsiveness. 
+*/
+
+
 body,
 html {
   height: 100%;
 }
-.bg {
-  background-image: url("src/assets/BlackJack-2.png");
+.main-bg {
   height: 100%;
-  background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
+  background: black url("src/assets/BlackJack-2.png") center no-repeat;
   color: white;
 }
 
@@ -19,45 +27,38 @@ html {
   line-height: .5em;
   /* color: white */
 }
-#start-stop {
+#start__stop__btns {
   margin-bottom: 2em;
   margin-top: .833em;
   margin-left: 1em;
 }
 
-.gameWelcome {
-  padding-left: 2em;
-  padding-right: 2em;
-}
-
-.gameText {
-  padding-left: 6em;
-  padding-right: 6em;
-  font-size: .85em ;
-}
-
-/* #game {
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-} */
-
-.grayBg {
-  background-color:rgba(118, 112, 112, 0.584);
+#game__area {
+  background-color:rgba(34, 34, 34, 0.85);
   height: 30em;
   width: 28em;
-  /* margin-left: 1em; */
   border: .167em solid rgb(182, 182, 182);
   line-height: 1.3em;
+
+  /* center all content for game and inner content */
   text-align: center;
   display: flex;
   justify-content: center;
   flex-direction: column;
-
   position: absolute;
   top: 50%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%);
+}
+
+#welcome__text {
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+#game__text {
+  padding-left: 6em;
+  padding-right: 6em;
+  font-size: .85em ;
 }

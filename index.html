@@ -15,34 +15,32 @@
 </head>
 
 <body>
-    <main class="bg">
+    <main class="main-bg">
         <header class="page-header">
             <h1>BlackJack</h1>
             <small id="author">Written By: Josh Tinsley</small>
         </header>
-        <div id="start-stop">
-            <button id="start-btn" type="button" class="btn btn-success btn-sm">Start Game</button>
-            <button id="end-btn" type="button" class="btn btn-dark btn-sm">End Game</button>
+        <div id="start__stop__btns">
+            <button id="start__btn" type="button" class="btn btn-success btn-sm">Start Game</button>
+            <button id="end__btn" type="button" class="btn btn-dark btn-sm">End Game</button>
         </div>
-        <div id="game" class="grayBg">
-            <div>
-                <div id="game-text">
-                    <h4 id="welcome-text" class="gameWelcome">Welcome to BlackJack!</h4>
-                    <p id="text-area" class="gameText">
-                        Game Text Here... Alot more text to see how wrapping is going to work with given margins/padding. 
-                    </p>
-                </div>
-                <div id="game-btns">
-                    <button id="deal-btn" type="button" class="btn btn-success btn-sm">Deal</button>
-                    <button id="hit-btn" type="button" class="btn btn-secondary btn-sm">Hit</button>
-                    <button id="stay-btn" type="button" class="btn btn-secondary btn-sm">Stay</button>
-                </div>
+        <div id="game__area">
+            <div id="text__area">
+                <h4 id="welcome__text">Welcome to BlackJack!</h4>
+                <p id="game__text">
+                    Game Text Here... Alot more text to see how wrapping is going to work with given margins/padding.
+                </p>
             </div>
-        </div> 
+            <div id="game__btns">
+                <button id="deal-btn" type="button" class="btn btn-success btn-sm">Deal</button>
+                <button id="hit-btn" type="button" class="btn btn-secondary btn-sm">Hit</button>
+                <button id="stay-btn" type="button" class="btn btn-secondary btn-sm">Stay</button>
+            </div>
+        </div>
         <section id="scripts">
-            <script src= "src/BlackJack.JS"></script>
+            <script src="src/BlackJack.JS"></script>
         </section>
     </main>
 </body>
-    
+
 </html>
