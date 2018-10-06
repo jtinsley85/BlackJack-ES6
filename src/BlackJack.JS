@@ -58,6 +58,7 @@ function startView() {
 //HANDLER FUNCTIONS
 function startGame() {
 	//DOM
+	defaultView();
 	startView();
 
 	//Initiate Game
@@ -90,11 +91,15 @@ function deal() {
 }
 
 function hit() {
-	console.log('"Hit" needs code...');
+	playerCards.push(getNextCard());
+	checkForEndOfGame();
+	showGameStatus();
 }
 
 function stay() {
-	console.log('"Stay" needs code...')
+	gameOver = true;
+	checkForEndOfGame();
+	showGameStatus();
 }
 
 function endGame() {
@@ -104,10 +109,78 @@ function endGame() {
 	welcome.innerText = `Thanks For Playing`
 	textArea.innerText = `Click "Start Game" to begin a new game.`;
 	gameButtons.style.display = 'none';
-
-	
 }
 
+function showGameStatus() {
+	if (!gameStarted) {
+		defaultView();
+		resetScores();
+		return;
+	}
+
+	let dealerCardString = '';
+	for (let i = 0; i < dealerCards.length; i++) {
+		dealerCardString += getCardString(dealerCards[i]) + '\n';
+	}
+
+	let playerCardString = '';
+	for (let i = 0; i < playerCards.length; i++) {
+		playerCardString += getCardString(playerCards[i]) + '\n';
+	}
+
+	updateScores();
+
+	//Display
+	welcomeTextDOM.style.display = 'none';
+	gameTextDOM.style.display = 'block';
+	gameTextDOM.innerText = 
+		'Dealer Has =\n' +
+		dealerCardString +
+		'[score: ' + dealerScore + ']\n\n' +
+
+		'Player Has =\n' +
+		playerCardString +
+		'[score: ' + playerScore + ']';
+
+	if (gameOver) {
+		if (playerWon) {
+			welcomeTextDOM.innerText = 'YOU WIN!';
+			gameTextDOM.innerText = 'Click "Start Game" to play again.';
+		} else {
+			welcomeTextDOM.innerText = 'DEALER WINS';
+			gameTextDOM.innerText = 'Click "Start Game" try again.';
+		}
+		defaultView();
+	}
+}
+
+function checkForEndOfGame() {
+	updateScores();
+	
+	if (gameOver) {
+		//let dealer take cards
+		while (dealerScore < playerScore
+			&& playerScore <= 21
+			&& dealerScore <= 21) {
+			dealerCards.push(getNextCard());
+			updateScores();
+			}
+	}
+
+	if (playerScore > 21) {
+		playerWon = true;
+		gameOver = true;
+	} else if (dealerScore > 21) {
+		playerWon = true;
+		gameOver = true;
+	} else if (gameOver) {
+		if (playerScore > dealerScore) {
+			playerWon = true;
+		} else {
+			playerWon = false;
+		}
+	}
+}
 
 //CLICK HANDLERS
 startButton.addEventListener('click', startGame);
@@ -117,7 +190,7 @@ hitButton.addEventListener('click', hit);
 stayButton.addEventListener('click', stay);
 
 
-//DECK LOGIC
+//DECK CLASS
 function createDeck() {
 	let deck = [];
   	for (let suitIDX = 0; suitIDX < suits.length; suitIDX++) {
@@ -150,9 +223,8 @@ function setCardStrings() {
 
 }
 
-//GAME FUNCTIONS
 
-//Score Class
+//SCORE CLASS
 function resetScores() {
 	dealerScore = 0;
 	playerScore = 0;
@@ -161,7 +233,7 @@ function resetScores() {
 function getCardScoreValue(card) {
 	switch (card.value) {
 		case 'Ace':
-			return 0;  //Value determined in getScores()
+			return 0;  //Value determined in getScore()
 			break;
 		case 'Two':
 			return 2;
@@ -193,7 +265,7 @@ function getCardScoreValue(card) {
 	}
 }
 
-function getScores(cardArray) {
+function getScore(cardArray) {
 	let score = 0;
 	let hasAce = false;
 	let ace = 1;
@@ -218,49 +290,8 @@ function updateScores() {
 	dealerScore = getScore(dealerCards);
 	playerScore = getScore(playerCards);
 }
-SLDKJSDF
 
-
-function showGameStatus() {
-	if (!gameStarted) {
-		defaultView();
-		resetScores();
-		return;
-	}
-
-	let dealerCardString = '';
-	for (let i = 0; i < dealerCards.length; i++) {
-		dealerCardString += getCardString(dealerCards[i]) + '\n';
-	}
-
-	let playerCardString = '';
-	for (let i = 0; i < playerCards.length; i++) {
-		playerCardString += getCardString(playerCards[i]) + '\n';
-	}
-
-	//updateScores();
-
-	//Display
-	welcomeTextDOM.style.display = 'none';
-	gameTextDOM.innertext = 'Dealer Has =\n' +
-		 					dealerCardString +
-							'[score: ' + dealerScore + ']\n\n' +
-		
-							'Player Has =\n' +
-							playerCardString +
-							'[score: ' + playerScore;
-
-	if (gameOver) {
-		if (playerWon) {
-			welcomeTextDOM.innerText = 'YOU WIN!';
-			gameTextDOM.innerText = 'Click "Start Game" to play again.';
-		} else {
-			welcomeTextDOM.innerText = 'DEALER WINS';
-			gameTextDOM.innerText = 'Click "Start Game" try again.';
-		}
-		defaultView();
-	}
-}
+//Game Play Class
 
 
 
