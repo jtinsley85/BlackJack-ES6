@@ -17,10 +17,14 @@ let gameStarted = false,
 
 //DOM VARIABLES
 let gameAreaDOM = document.getElementById('game__area'),
+	
 	textAreaDOM = document.getElementById('text__area'),
 	welcomeTextDOM = document.getElementById('welcome__text'),
-	gameTextDOM = document.getElementById('game__text'),
-	gameButtonsDOM = document.getElementById('game__btns'),
+	infoTextDOM = document.getElementById('info__text'),
+
+	statusContentDOM = document.getElementById('status__content'),
+	dealerTextDOM = document.getElementById('dealer__text'),
+	playerTextDOM = document.getElementById('player__text'),
 
 	startButton = document.getElementById('start-btn'),
 	endButton = document.getElementById('end-btn'),
@@ -30,10 +34,15 @@ let gameAreaDOM = document.getElementById('game__area'),
 
 //VIEW FUNCTIONS
 function defaultView() {
-	//Set DOM Text to default
+	if (!playerWon) {
+	// Set DOM Text to default
 	welcomeTextDOM.innerText = 'Welcome to BlackJack!';
 	welcomeTextDOM.style.display = 'initial';
-	gameTextDOM.style.display = 'none';
+	infoTextDOM.style.display = 'none';
+	statusContentDOM.style.display = 'none';
+		
+	}
+
 	//Set buttons to default
 	startButton.style.display = 'initial';
 	endButton.style.display = 'none';
@@ -51,8 +60,8 @@ function startView() {
 	dealButton.style.display = 'initial';
 	//Text
 	welcomeTextDOM.innterText = `Let's Play!`
-	gameTextDOM.innerText = `Click "Deal" to begin.`
-	gameTextDOM.style.display = 'block';
+	infoTextDOM.innerText = `Click "Deal" to begin.`
+	infoTextDOM.style.display = 'block';
 }
 
 //HANDLER FUNCTIONS
@@ -68,7 +77,8 @@ function startGame() {
 	resetScores();
 
 	//Initiate Deck
-	deck = createDeck();	
+	deck = createDeck();
+	shuffleDeck();
 	playerCards = [getNextCard(), getNextCard()];
 	dealerCards = [getNextCard(), getNextCard()];
 	return playerCards, dealerCards;
@@ -132,28 +142,28 @@ function showGameStatus() {
 
 	//Display
 	welcomeTextDOM.style.display = 'none';
-	gameTextDOM.style.display = 'block';
-	gameTextDOM.innerText = 
-		'Dealer Has =\n' +
-		dealerCardString +
-		'[score: ' + dealerScore + ']\n\n' +
-
-		'Player Has =\n' +
-		playerCardString +
-		'[score: ' + playerScore + ']';
+	infoTextDOM.style.display = 'none';
+	statusContentDOM.style.display = 'initial';
+	dealerTextDOM.innerText = dealerCardString + '[score: ' + dealerScore + ']';
+	playerTextDOM.innerText = playerCardString + '[score: ' + playerScore + ']';
 
 	if (gameOver) {
 		if (playerWon) {
+			statusContentDOM.style.display = 'none';
 			welcomeTextDOM.innerText = 'YOU WIN!';
-			gameTextDOM.innerText = 'Click "Start Game" to play again.';
+			welcomeTextDOM.style.display = 'block';
+			infoTextDOM.innerText = `[PlayerScore: ${playerScore}] | [DealerScore: ${dealerScore}] \nClick "Start Game" to play again.`;
+			infoTextDOM.style.display = 'block';
 		} else {
+			statusContentDOM.style.display = 'none';
 			welcomeTextDOM.innerText = 'DEALER WINS';
-			gameTextDOM.innerText = 'Click "Start Game" try again.';
+			welcomeTextDOM.style.display = 'block';
+			infoTextDOM.innerText = `[PlayerScore: ${playerScore}] | [DealerScore: ${dealerScore}] \nClick "Start Game" try again.`;
+			infoTextDOM.style.display = 'block';
 		}
-		defaultView();
 	}
 }
-
+//FIXME:
 function checkForEndOfGame() {
 	updateScores();
 	
@@ -167,10 +177,10 @@ function checkForEndOfGame() {
 			}
 	}
 
-	if (playerScore > 21) {
+	if (playerScore = 21) {			//If player gets 21 - they win
 		playerWon = true;
 		gameOver = true;
-	} else if (dealerScore > 21) {
+	} else if (dealerScore = 21) {  //
 		playerWon = true;
 		gameOver = true;
 	} else if (gameOver) {
@@ -193,12 +203,12 @@ stayButton.addEventListener('click', stay);
 //DECK CLASS
 function createDeck() {
 	let deck = [];
-  	for (let suitIDX = 0; suitIDX < suits.length; suitIDX++) {
+	for (let suitIDX = 0; suitIDX < suits.length; suitIDX++) {
 		for (let valueIDX = 0; valueIDX < values.length; valueIDX++) {
-		let card = { suit: suits[suitIDX], value: values[valueIDX] };
-		deck.push(card);
-    	}
-  	}
+			let card = { suit: suits[suitIDX], value: values[valueIDX] };
+			deck.push(card);
+		}
+	}
 	return deck;
 }
 
@@ -219,15 +229,34 @@ function shuffleDeck() {
 	}
 }
 
-function setCardStrings() {
-
-}
-
 
 //SCORE CLASS
 function resetScores() {
 	dealerScore = 0;
 	playerScore = 0;
+}
+
+//FIXME: Not calculating scores correctly. . . 
+
+function getScore(cardArray) {
+	let score = 0;
+	let hasAce = false;
+	let ace = 1;
+
+	for (i = 0; i < cardArray.length; i++) {
+		let card = cardArray[i];
+		score += getCardScoreValue(card);		//if Ace is passed "score" is unchanged here
+		if (card.value === 'Ace') {
+			hasAce = true;
+		}
+		//Calculate Ace Value
+		if (hasAce && (score + 11 <= 21)) {
+			ace = 11;
+			score += ace;  //ace is 11
+		} else {
+			score += ace;  //ace is default value of 1
+		}
+	} return score;
 }
 
 function getCardScoreValue(card) {
@@ -265,45 +294,11 @@ function getCardScoreValue(card) {
 	}
 }
 
-function getScore(cardArray) {
-	let score = 0;
-	let hasAce = false;
-	let ace = 1;
-
-	for (i = 0; i < cardArray.length; i++) {
-		let card = cardArray[i];
-		score += getCardScoreValue(card);		//if Ace is passed "score" is unchanged here
-		if (card.value === 'Ace') {
-			hasAce = true;
-		}
-		//Calculate Ace Value
-		if (hasAce && (score + 11 <= 21)) {
-			ace = 11;
-			score += ace;  //ace is 11
-		} else {
-			score += ace;  //ace is default value of 1
-		}
-	} return score;
-}
-
 function updateScores() {
 	dealerScore = getScore(dealerCards);
 	playerScore = getScore(playerCards);
 }
 
-//Game Play Class
-
-
-
 
 //GAME STARTS HERE
 showGameStatus();
-
-
-
-
-
-// console.log(welcomeTextDOM.innerText);
-// console.log(gameTextDOM.innerText);
-// console.log(` ${getCardString(playerCards[0])}`);
-// console.log(` ${getCardString(playerCards[1])}`);

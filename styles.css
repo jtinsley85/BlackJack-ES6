@@ -58,6 +58,10 @@ header {
   transform: translate(-50%, -50%);
 }
 
+#game__btns {
+  padding-top: 1em;
+}
+
 #text__area {
   padding-bottom: 1em;
 }
@@ -66,10 +70,35 @@ header {
   text-align: center;
 }
 
-#game__text {
+#info__text {
   padding-left: 5.5em;
   padding-right: 5.5em;
   padding-top: .25em;
   font-size: .85em ;
   word-wrap: break-word;
+}
+
+#status__content {
+  padding-left: 30%;
+  padding-right: 30%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: .25em;
+  font-size: .85em ;
+  word-wrap: break-word;
+}
+
+/* for testing */
+/* #status__content, #dealer__status, #player__status {  
+  border: .167em solid rgb(182, 182, 182);
+} */
+
+#dealer__status {
+  float: left;
+  text-align: left;
+}
+
+#player__status {
+  float: right;
+  text-align: left;
 }

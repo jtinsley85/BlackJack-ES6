@@ -20,27 +20,39 @@
             <h1>BlackJack</h1>
             <small id="author">Written By: Josh Tinsley</small>
             <div id="end__btn">
-                    <button id="end-btn" type="button" class="btn btn-dark btn-med">End Game</button>
+                <button id="end-btn" type="button" class="btn btn-dark btn-med">End Game</button>
             </div>
         </header>
-       
-        <div id="game__area">
+
+        <div id="game__area" class="container">
             <div id="text__area">
                 <h4 id="welcome__text">Welcome to BlackJack!</h4>
-                <p id="game__text">
-                    Game Text Here... (This is Default Text).
+                <p id="info__text">
+                    Info Text Here...
                 </p>
             </div>
-            <div id="game__btns">
-                <button id="start-btn" type="button" class="btn btn-success btn-med">Start Game</button>
-                <button id="deal-btn" type="button" class="btn btn-success btn-med">Deal</button>
-                <button id="hit-btn" type="button" class="btn btn-secondary btn-med">Hit</button>
-                <button id="stay-btn" type="button" class="btn btn-secondary btn-med">Stay</button>
+            <div id="status__content" class="container">
+                <div id="content__row" class="row">
+                    <div id="dealer__status" class="col">
+                        <h5 id="dHeader">Dealer Has:</h5>
+                        <p id="dealer__text">dealer text here...</p>
+                    </div>
+                    <div id="player__status" class="col">
+                        <h5 id="pHeader" >Player Has:</h5>
+                        <p id="player__text">player text here...</p>
+                    </div>
+                </div>
             </div>
+                <div id="game__btns">
+                    <button id="start-btn" type="button" class="btn btn-success btn-med">Start Game</button>
+                    <button id="deal-btn" type="button" class="btn btn-success btn-med">Deal</button>
+                    <button id="hit-btn" type="button" class="btn btn-secondary btn-med">Hit</button>
+                    <button id="stay-btn" type="button" class="btn btn-secondary btn-med">Stay</button>
+                </div>
         </div>
-        <section id="scripts">
-            <script src="src/BlackJack.JS"></script>
-        </section>
+                <section id="scripts">
+                    <script src="src/BlackJack.JS"></script>
+                </section>
     </main>
 </body>
 
