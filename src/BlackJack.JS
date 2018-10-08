@@ -8,7 +8,8 @@ let suits = ["Hearts", "Spades", "Clubs", "Diamonds"],
 let gameStarted = false,
 	gameOver = false,
 	playerWon = false,
-	deck = []
+	dealerWon = false,
+	deck = [],
 	playerCards = [],
 	dealerCards = [],
 	dealerScore = 0,
@@ -78,10 +79,14 @@ function startGame() {
 
 	//Initiate Deck
 	deck = createDeck();
+	//Shuffle
 	shuffleDeck();
+	console.log('Shuffling Deck...');
+	console.log('New Deck...');
+	console.log(deck);
+	//Set Player Cards
 	playerCards = [getNextCard(), getNextCard()];
 	dealerCards = [getNextCard(), getNextCard()];
-	return playerCards, dealerCards;
 }
 
 function deal() {
@@ -90,13 +95,7 @@ function deal() {
 	stayButton.style.display = 'inline-block';
 	dealButton.style.display = 'none';
 
-	//Shuffle Deck
-	console.log('Shuffling Deck...');
-	shuffleDeck();
-	console.log('New Deck...');
-	console.log(deck);
 	console.log('dealing cards...');
-
 	showGameStatus();
 }
 
@@ -167,7 +166,7 @@ function showGameStatus() {
 function checkForEndOfGame() {
 	updateScores();
 	
-	if (gameOver) {
+	if (gameOver) {					
 		//let dealer take cards
 		while (dealerScore < playerScore
 			&& playerScore <= 21
@@ -177,18 +176,12 @@ function checkForEndOfGame() {
 			}
 	}
 
-	if (playerScore = 21) {			//If player gets 21 - they win
-		playerWon = true;
+	if (playerScore <= 21 && playerScore > dealerScore) {
 		gameOver = true;
-	} else if (dealerScore = 21) {  //
 		playerWon = true;
+	} else {
 		gameOver = true;
-	} else if (gameOver) {
-		if (playerScore > dealerScore) {
-			playerWon = true;
-		} else {
-			playerWon = false;
-		}
+		playerWon = false;
 	}
 }
 
@@ -237,7 +230,6 @@ function resetScores() {
 }
 
 //FIXME: Not calculating scores correctly. . . 
-
 function getScore(cardArray) {
 	let score = 0;
 	let hasAce = false;
@@ -253,7 +245,7 @@ function getScore(cardArray) {
 		if (hasAce && (score + 11 <= 21)) {
 			ace = 11;
 			score += ace;  //ace is 11
-		} else {
+		} else if (hasAce && (score + 11 > 21)) {
 			score += ace;  //ace is default value of 1
 		}
 	} return score;
