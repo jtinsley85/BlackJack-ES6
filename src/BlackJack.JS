@@ -4,15 +4,15 @@ let suits = ["Hearts", "Spades", "Clubs", "Diamonds"],
             "Nine", "Ten", "Jack", "Queen", "King", "Ace"];
 
 //GAME VARIABLES
-let gameStarted = false,
-  gameOver = false,
-  playerWon = false,
-  dealerWon = false,
-  deck = [],
-  playerCards = [],
-  dealerCards = [],
-  dealerScore = 0,
-  playerScore = 0;
+let inSession = false,
+    playerWon = false,
+    dealerWon = false,
+    endGameClicked = false,
+    deck = [],
+    playerCards = [],
+    dealerCards = [],
+    dealerScore = 0,
+    playerScore = 0;
 
 //DOM VARIABLES
 let gameAreaDOM = document.getElementById("game__area"),
@@ -24,7 +24,6 @@ let gameAreaDOM = document.getElementById("game__area"),
   playerTextDOM = document.getElementById("player__text"),
   startButton = document.getElementById("start-btn"),
   endButton = document.getElementById("end-btn"),
-  dealButton = document.getElementById("deal-btn"),
   hitButton = document.getElementById("hit-btn"),
   stayButton = document.getElementById("stay-btn");
 
@@ -37,14 +36,11 @@ function defaultDOMView() {
     infoTextDOM.style.display = "none";
     statusContentDOM.style.display = "none";
   }
-  //Set buttons to default
-  defaultButtonView();
 }
 
 function defaultButtonView() {
   startButton.style.display = "initial";
   endButton.style.display = "none";
-  dealButton.style.display = "none";
   hitButton.style.display = "none";
   stayButton.style.display = "none";
 }
@@ -53,13 +49,10 @@ function startView() {
   //Buttons
   startButton.style.display = "none";
   endButton.style.display = "initial";
-  hitButton.style.display = "none";
-  stayButton.style.display = "none";
-  dealButton.style.display = "initial";
+  hitButton.style.display = "inline-block";
+  stayButton.style.display = "inline-block";
   //Text
   welcomeTextDOM.innterText = `Let's Play!`;
-  infoTextDOM.innerText = `Click "Deal" to begin.`;
-  infoTextDOM.style.display = "block";
 }
 
 //HANDLER FUNCTIONS
@@ -69,8 +62,7 @@ function startGame() {
   startView();
 
   //Initiate Game
-  gameStarted = true;
-  gameOver = false;
+  inSession = true;
   playerWon = false;
   resetScores();
 
@@ -84,13 +76,6 @@ function startGame() {
   //Set Player Cards
   playerCards = [getNextCard(), getNextCard()];
   dealerCards = [getNextCard(), getNextCard()];
-}
-
-function deal() {
-  //DOM
-  hitButton.style.display = "inline-block";
-  stayButton.style.display = "inline-block";
-  dealButton.style.display = "none";
 
   console.log("dealing cards...");
   showGameStatus();
@@ -103,7 +88,7 @@ function hit() {
 }
 
 function stay() {
-  gameOver = true;
+  inSession = false;
   checkForEndOfGame();
   showGameStatus();
 }
@@ -113,12 +98,12 @@ function endGame() {
   endButton.style.display = "none";
   textArea.style.display = "inline";
   welcome.innerText = `Thanks For Playing`;
-  textArea.innerText = `Click "Start Game" to begin a new game.`;
+  infoTextDOM.innerText = `Click "Start Game" to begin a new game.`;
   gameButtons.style.display = "none";
 }
 
 function showGameStatus() {
-  if (!gameStarted) {
+  if (inSession) {
     defaultDOMView();
     resetScores();
     return;
@@ -143,7 +128,7 @@ function showGameStatus() {
   dealerTextDOM.innerText = `${dealerCardString}[score: ${dealerScore}]`;
   playerTextDOM.innerText = `${playerCardString}[score: ${playerScore}]`;
 
-  if (gameOver) {
+  if (!inSession) {
     if (playerWon) {
       welcomeTextDOM.innerText = "YOU WIN!";
     } else {
@@ -155,60 +140,49 @@ function showGameStatus() {
     defaultButtonView();
   }
 }
-//FIXME:
+
 function checkForEndOfGame() {
   updateScores();
 
-  if (gameOver) {
-    //let dealer take cards
+  if (!inSession) {
+    //LET DEALER TAKE CARDS
     while (dealerScore < playerScore &&
           playerScore <= 21 &&
-          dealerScore <= 15) {           //dealer takes his last hit at 15
+          dealerScore <= 16) {           //dealer takes his last hit at 16
       dealerCards.push(getNextCard());
       updateScores();
     };
   };
 
 
-
+  //IF PLAYER IS DONE TAKING CARDS
   if (playerScore <= 21) {
     if (dealerScore === 21) {
       console.log("Dealer Wins!");
-      gameOver = true;
-      playerWon = false;
+      inSession = false;
+      dealerWon = true;
     } else if (dealerScore > 21) {
       console.log("Dealer Busts = YOU WIN!");
-      gameOver = true;
+      inSession = false;
       playerWon = true;
-      // if dealer's score is higher than 15, he's done taking cards.
-    } else if (dealerScore > 15) {
+
+    //IF DEALER IS DONE TAKING CARDS
+    } else if (dealerScore > 16) {
       if (playerScore > dealerScore) {
         console.log("Player Wins");
-        gameOver = true;
+        inSession = false;
         playerWon = true;
       } else {
         console.log("Dealer Wins");
-        gameOver = true;
-        playerWon = false;
+        inSession = false;
+        dealerWon = true;
       }
     }
-  } else {
+  } else { //OR IF PLAYER BUSTS
     console.log("Player Busts = YOU LOSE!");
-    gameOver = true;
+    inSession = false;
     playerWon = false;
   }
-
-  // if (playerScore > 21) { console.log('Player Busted - YOU LOSE') } else if (dealerScore > 21) { console.log('Dealer Busted - YOU WIN!')}
-  // if (playerScore === dealerScore && dealerScore === 21) { console.log('Tie = Dealer Wins!') };
-  // if (playerScore <= 21 && dealerScore < playerScore) { console.log('Player Wins') };
-
-  // if ((playerScore <= 21 && playerScore > dealerScore) || dealerScore > 21) {
-  //   gameOver = true;
-  //   playerWon = true;
-  // } else {
-  //   gameOver = true;
-  //   playerWon = false;
-  // };
 
 }
 
@@ -254,7 +228,6 @@ function resetScores() {
   playerScore = 0;
 }
 
-//FIXME: Not calculating scores correctly. . .
 function getScore(cardArray) {
   let score = 0;
 
