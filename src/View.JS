@@ -1,15 +1,16 @@
-//Status Default
-let inSession = false;
+import { playerCardString, dealerCardString } from "deck.js";
+import { dealerScore, playerScore } from "scores.js";
+import * as app from "app.js";
 
 
 //DOM Sections
 const gameAreaDOM = document.getElementById("game__area"),
     textAreaDOM = document.getElementById("text__area"),
-    statusContentDOM = document.getElementById("status__content");
+    statusContent = document.getElementById("status__content");
 
 //DOM Text
-const welcomeTextDOM = document.getElementById("welcome__text"),
-    infoTextDOM = document.getElementById("info__text"),
+const mainHeader = document.getElementById("main__header"),
+    info = document.getElementById("info__text"),
     dealerTextDOM = document.getElementById("dealer__text"),
     playerTextDOM = document.getElementById("player__text");
 
@@ -21,60 +22,69 @@ const startButton = document.getElementById("start-btn"),
     stayButton = document.getElementById("stay-btn");
 
 
+//CLICK HANDLERS
+startButton.addEventListener("click", app.startGame);
+endButton.addEventListener("click", app.endGame);
+hitButton.addEventListener("click", app.hit);
+stayButton.addEventListener("click", app.stay);
+
+
+//VIEW FUNCTIONS
 function setViewText() {
-    let w, t;
+    let m, i;
     let d = `${dealerCardString}[SCORE: ${dealerScore}]`,
         p = `${playerCardString}[SCORE: ${playerScore}]`;
 
     if (inSession) {
-        w = "Let's Play BlackJack";
-    } else if (playerWon) {
-        w = "YOU WIN!";
-    } else if (dealerWon) {
-        w = "DEALER WINS";
-    } else if (endGameClicked) {
-        w = `Thanks For Playing`;
-        t = `Click "Start Game" to begin a new game.`;
+        m = "Let's Play BlackJack";
+    } else if (app.playerWon) {
+        m = "YOU WIN!";
+    } else if (app.dealerWon) {
+        m = "DEALER WINS";
+    } else if (app.endGameClicked) {
+        m = `Thanks For Playing`;
+        i = `Click "Start Game" to begin a new game.`;
     } else {
-        w = "Welcome to BlackJack!"
+        m = "Welcome to BlackJack!"
     }
     
-    welcomeTextDOM.innerText = w;
+    mainHeader.innerText = w;
     dealerTextDOM.innerText = d;
     playerTextDOM.innerText = p;
-    infoTextDOM.innerText = t;
+    info.innerText = t;
 }
     
-function setView() {
+export function setView() {
     setViewText();
 
-    if (inSession) {
+    if (app.inSession) {
         //Normal GamePlay View
-        welcomeTextDOM.style.display = "initial";
-        statusContentDOM.style.display = "initial";
+        mainHeader.style.display = "initial";
+        statusContent.style.display = "initial";
 
         startButton.style.display = "none";
-        infoTextDOM.style.display = "none";
+        info.style.display = "none";
 
         endButton.style.display = "initial";
         hitButton.style.display = "inline-block";
         stayButton.style.display = "inline-block";
 
-    } else if (endGameClicked) {
+    } else if (app.endGameClicked) {
         //Manual Game Exit
-        infoTextDOM.style.display = "initial";
-        statusContentDOM.style.display = "none";
+        info.style.display = "initial";
+        statusContent.style.display = "none";
         endButton.style.display = "none";
         hitButton.style.display = "none";
         stayButton.style.display = "none";
+        startButton.style.display = "inline-block"
     } else if (playerWon || dealerWon) {
         //Game Over (with winner)
-        infoTextDOM.style.display = "none";
+        info.style.display = "none";
         startButton.style.display = "initial";
         endButton.style.display = "none";
         hitButton.style.display = "none";
         stayButton.style.display = "none";
     } else {
-        statusContentDOM.style.display = "none";
+        statusContent.style.display = "none";
     }
 }
