@@ -109,12 +109,17 @@ function stay() {
 }
 
 function endGame() {
-  startButton.style.display = "inline-block";
-  endButton.style.display = "none";
-  textArea.style.display = "inline";
-  welcome.innerText = `Thanks For Playing`;
-  textArea.innerText = `Click "Start Game" to begin a new game.`;
-  gameButtons.style.display = "none";
+  infoTextDOM.style.display = "block";
+  welcomeTextDOM.style.display = "block";
+  welcomeTextDOM.innerText = `Thanks For Playing`;
+  infoTextDOM.innerText = `Click "Start Game" to begin a new game.`;
+  statusContentDOM.style.display = "none";
+  defaultButtonView();
+  resetScores();
+  gameOver = true;
+  gameStarted = false;
+  playerWon = false;
+  dealerWon = false;
 }
 
 function showGameStatus() {
@@ -155,7 +160,7 @@ function showGameStatus() {
     defaultButtonView();
   }
 }
-//FIXME:
+
 function checkForEndOfGame() {
   updateScores();
 
@@ -168,8 +173,6 @@ function checkForEndOfGame() {
       updateScores();
     };
   };
-
-
 
   if (playerScore <= 21) {
     if (dealerScore === 21) {
