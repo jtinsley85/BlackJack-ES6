@@ -94,12 +94,5 @@ function checkForEndOfGame() {
 
 }
 
-
-//DECK CLASS
-
-
-//SCORE CLASS
-
-
 //GAME STARTS HERE
 showGameStatus();
