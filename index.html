@@ -8,49 +8,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BlackJack</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> -->
 </head>
 
 <body>
-    <main class="main-bg">
-        <header class="page-header">
-            <h1>BlackJack</h1>
-            <small id="author">Written By: Josh Tinsley</small>
-            <div id="end__btn">
-                <button id="end-btn" type="button" class="btn btn-dark btn-med">End Game</button>
-            </div>
+    <div class="main__section">
+        <header class="page__header">
+                <h1>BlackJack</h1>
+                <small id="author">Written By: Josh Tinsley</small>
+                <div id="end__btn">
+                    <button id="end-btn" type="button" class="btn btn-dark btn-med">End Game</button>
+                </div>
         </header>
 
-        <div id="game__area" class="container">
-            <div id="text__area">
-                <h4 id="main__header">Welcome to BlackJack!</h4>
-                <p id="info__text">
-                    Info Text Here...
-                </p>
-            </div>
-            <div id="status__content" class="container">
-                <div id="content__row" class="row">
-                    <div id="dealer__status" class="col">
-                        <h5 id="dHeader">Dealer Has:</h5>
-                        <p id="dealer__text">dealer text here...</p>
+
+        
+        <main class="main main-bg">
+            <div class="game__area">
+                <div id="text__area">
+                    <h4 id="main__header">Welcome to BlackJack!</h4>
+                    <p id="info__text">
+                        Info Text Here...
+                    </p>
+                </div>
+                <div id="status__content" class="container">
+                    <div id="content__header__row" class="row">
+                        <span id="header__item dealer__header">Dealer Has:</span>
+                        <span id="dealer__header">Player Has:</span>
                     </div>
-                    <div id="player__status" class="col">
-                        <h5 id="pHeader">Player Has:</h5>
-                        <p id="player__text">player text here...</p>
+                    <div id="content__cards__row" class="row">
+                        <span id="card__text dealer__card__text">dealer text here...</span>
+                        <span id="card__text player__card__text">player text here...</span>
                     </div>
+                    <div id="content__scores__row" class="row">
+                        <span id="score__text dealer__score">[dealer score]</span>
+                        <span id="score__text player__score">[player score]</span>
+                    </div>
+
+
+
+
+
+
+                    <!-- <div id="content__row" class="row">
+                        <div id="dealer__status" class="col">
+                            <h5 id="dHeader">Dealer Has:</h5>
+                            <p id="dealer__text">dealer text here...</p>
+                        </div>
+                        <div id="player__status" class="col">
+                            <h5 id="pHeader">Player Has:</h5>
+                            <p id="player__text">player text here...</p>
+                        </div>
+                    </div> -->
+
+
+                    
+                </div>
+                <div id="game__btns">
+                    <button id="start-btn" type="button" class="btn btn-success btn-med">Start Game</button>
+                    <button id="deal-btn" type="button" class="btn btn-success btn-med">Deal</button>
+                    <button id="hit-btn" type="button" class="btn btn-secondary btn-med">Hit</button>
+                    <button id="stay-btn" type="button" class="btn btn-secondary btn-med">Stay</button>
                 </div>
             </div>
-            <div id="game__btns">
-                <button id="start-btn" type="button" class="btn btn-success btn-med">Start Game</button>
-                <button id="deal-btn" type="button" class="btn btn-success btn-med">Deal</button>
-                <button id="hit-btn" type="button" class="btn btn-secondary btn-med">Hit</button>
-                <button id="stay-btn" type="button" class="btn btn-secondary btn-med">Stay</button>
-            </div>
-        </div>
-        <section id="scripts">
-            <script src="build/main.bundle.js"></script>
         </section>
-    </main>
+        <section id="scripts">
+            <!-- <script src="build/main.bundle.js"></script> -->
+        </main>
+    </div> 
 </body>
 
 </html>

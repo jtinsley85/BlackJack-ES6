@@ -1,158 +1,159 @@
 // //GAME FLAGS
-const gameFlags = {
-  inSession : false,
-  endGameClicked : false,
-  dealerWon : false,
-  playerWon : false
-};
+              const gameFlags = {
+                inSession : false,
+                endGameClicked : false,
+                dealerWon : false,
+                playerWon : false
+              };
 
-
-const players = [
-  {
-      name: "Dealer",
-      type: "dealer",
-      score: 0,
-      cards: [],
-      cardString: ""
-  },
-  {
-      name: "Player 1",
-      type: "player",
-      score: 0,
-      cards: [],
-      cardString: ""
-  }
-]
+              const players = [
+                {
+                    name: "Dealer",
+                    type: "dealer",
+                    score: 0,
+                    cards: [],
+                    cardString: ""
+                },
+                {
+                    name: "Player 1",
+                    type: "player",
+                    score: 0,
+                    cards: [],
+                    cardString: ""
+                }
+              ]
 
 //DECK VARIABLES
-const suits = ["Hearts", "Spades", "Clubs", "Diamonds"];
-const values = [
-    "Two",
-    "Three",
-    "Four",
-    "Five",
-    "Six",
-    "Seven",
-    "Eight",
-    "Nine",
-    "Ten",
-    "Jack",
-    "Queen",
-    "King",
-    "Ace"
-];
+              const suits = ["Hearts", "Spades", "Clubs", "Diamonds"];
+              const values = [
+                  "Two",
+                  "Three",
+                  "Four",
+                  "Five",
+                  "Six",
+                  "Seven",
+                  "Eight",
+                  "Nine",
+                  "Ten",
+                  "Jack",
+                  "Queen",
+                  "King",
+                  "Ace"
+              ];
 
-const deck = createDeck();
-
+              const deck = createDeck();
 
 //DECK FUNCTIONS
-function createCardString(cardObj) {
-  return cardObj.value + " of " + cardObj.suit;
-}
+              function createCardString(cardObj) {
+                return cardObj.value + " of " + cardObj.suit;
+              }
 
-function setCardStrings() {
-  console.groupCollapsed("Calculate CardStrings")
-  for (let i = 0; i < players.length; i++) {
-      let name = players[i].name;
-      let cards = players[i].cards;
-      let cString = players[i].cardString;
-      
-      // console.log(name, cards);
-      
-      //Log Error if players dont have at least 2 cards.
-      if ((cards.length < 1)) {
-          console.log(`${name}'s hand is not delt`)
-      }
+              function setCardStrings() {
+                console.groupCollapsed("Calculate CardStrings")
+                for (let i = 0; i < players.length; i++) {
+                    let name = players[i].name;
+                    let cards = players[i].cards;
+                    let cString = players[i].cardString;
+                    
+                    // console.log(name, cards);
+                    
+                    //Log Error if players dont have at least 2 cards.
+                    if ((cards.length < 1)) {
+                        console.log(`${name}'s hand is not delt`)
+                    }
 
-      //Calculate & Set player cardstrings
-      for (let c of cards) {
-          cString += createCardString(c) + "\n";
-      }
-      //Check if cardStrings are populated
-      if (cString.length) {
-          console.groupCollapsed(name, 'cardString')
-          console.log(cString);
-          console.groupEnd();
-      }
-  }
-}
+                    //Calculate & Set player cardstrings
+                    for (let c of cards) {
+                        cString += createCardString(c) + "\n";
+                    }
+                    //Check if cardStrings are populated
+                    if (cString.length) {
+                        console.groupCollapsed(name, 'cardString')
+                        console.log(cString);
+                        console.groupEnd();
+                    }
+                }
+              }
 
-function createDeck() {
-  console.groupCollapsed('Creating Deck...')
-  let newDeck = [];
-  for (let suitIDX = 0; suitIDX < suits.length; suitIDX++) {
-      for (let valueIDX = 0; valueIDX < values.length; valueIDX++) {
-          let card = { suit: suits[suitIDX], value: values[valueIDX] };
-          newDeck.push(card);
-      }
-  }
-  console.log(`Deck Created =`, newDeck);
-  console.groupEnd();
-  return newDeck;
-}
+              function createDeck() {
+                console.groupCollapsed('Creating Deck...')
+                let newDeck = [];
+                for (let suitIDX = 0; suitIDX < suits.length; suitIDX++) {
+                    for (let valueIDX = 0; valueIDX < values.length; valueIDX++) {
+                        let card = { suit: suits[suitIDX], value: values[valueIDX] };
+                        newDeck.push(card);
+                    }
+                }
+                console.log(`Deck Created =`, newDeck);
+                console.groupEnd();
+                return newDeck;
+              }
 
-function shuffleDeck() {
-  for (let cardIDX = 0; cardIDX < deck.length; cardIDX++) {
-      let randomIDX = Math.trunc(Math.random() * deck.length); //random # between 0 and 51
-      let tempIDX = deck[randomIDX];
-      deck[randomIDX] = deck[cardIDX];
-      deck[cardIDX] = tempIDX;
-  }
-  console.log(`Shuffled Deck`);
-}
+              function shuffleDeck() {
+                for (let cardIDX = 0; cardIDX < deck.length; cardIDX++) {
+                    let randomIDX = Math.trunc(Math.random() * deck.length); //random # between 0 and 51
+                    let tempIDX = deck[randomIDX];
+                    deck[randomIDX] = deck[cardIDX];
+                    deck[cardIDX] = tempIDX;
+                }
+                console.log(`Shuffled Deck`);
+              }
 
-function dealHands() {
-  for (let i = 0; i < players.length; i++) {
-    players[i].cards = [getNextCard(), getNextCard()];
-    console.log(`${players[i].name}'s hand is: `, players[i].cards)
-  }
-}
+              function dealHands() {
+                for (let i = 0; i < players.length; i++) {
+                  players[i].cards = [getNextCard(), getNextCard()];
+                  console.log(`${players[i].name}'s hand is: `, players[i].cards)
+                }
+              }
 
-function getNextCard() {
-  return deck.shift()
-}
+              function getNextCard() {
+                return deck.shift()
+              }
 
 
 //DATA FUNCTIONS
-function getPlayerData(value) {
-  let data = [];
-  
-  for (let p = 0; p < players.length; p++) {
-      if (value) {
-          data.push(players[p][value]);
-      } else {
-          data.push(players[p]);
-      }
-  }
-  return data;
-}
+              function getPlayerData(value) {
+                let data = [];
+                
+                for (let p = 0; p < players.length; p++) {
+                    if (value) {
+                        data.push(players[p][value]);
+                    } else {
+                        data.push(players[p]);
+                    }
+                }
+                return data;
+              }
 
-// Example of returning data: 
-// const playerNames = getPlayerData('name');
-// Returns array of names
+              // Example of returning data: 
+              // const playerNames = getPlayerData('name');
+              // Returns array of names
 
-function updatePlayerData() {
-  //TODO:
-}
+              function updatePlayerData() {
+                //TODO:
+              }
+
+
+//VIEW HANDLERS
+  const DOM = {
+    //Sections
+    gameArea: document.getElementById("game__area"),
+    textArea: document.getElementById("text__area"),
+    statusContent: document.getElementById("status__content"),
+    //Text
+    mainHeader: document.getElementById("main__header"),
+    infoText: document.getElementById("info__text"),
+    dealerText: document.getElementById("dealer__text"),
+    playerText: document.getElementById("player__text"),
+    //Buttons 
+    startButton: document.getElementById("start-btn"),
+    endButton: document.getElementById("end-btn"),
+    dealButton: document.getElementById("deal-btn"),
+    hitButton: document.getElementById("hit-btn"),
+    stayButton: document.getElementById("stay-btn")
+  };
 
 //VIEW VARIABLES
-const DOM = {
-  //Sections
-  gameArea: document.getElementById("game__area"),
-  textArea: document.getElementById("text__area"),
-  statusContent: document.getElementById("status__content"),
-  //Text
-  mainHeader: document.getElementById("main__header"),
-  infoText: document.getElementById("info__text"),
-  dealerText: document.getElementById("dealer__text"),
-  playerText: document.getElementById("player__text"),
-  //Buttons 
-  startButton: document.getElementById("start-btn"),
-  endButton: document.getElementById("end-btn"),
-  dealButton: document.getElementById("deal-btn"),
-  hitButton: document.getElementById("hit-btn"),
-  stayButton: document.getElementById("stay-btn")
-};
 
 
 
@@ -443,4 +444,4 @@ console.group('Check for End of Game')
 }
 
 //GAME STARTS HERE
-setView();
+// setView();
