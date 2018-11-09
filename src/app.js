@@ -192,6 +192,7 @@ function setDOMVisibility() {
     DOM.hitButton.style.display = "none";
     DOM.stayButton.style.display = "none";
     DOM.startButton.style.display = "inline-block"
+
   } else if (gameFlags.playerWon || gameFlags.dealerWon) {        //not inSession
     //Game Over (with winner)
     console.log('View: Game Over (with Winner)');
@@ -200,6 +201,7 @@ function setDOMVisibility() {
     DOM.endButton.style.display = "none";
     DOM.hitButton.style.display = "none";
     DOM.stayButton.style.display = "none";
+
   } else {
       //Hide game text and game buttons if not inSession && No Winner declared
     console.log('View: Not InSession');
@@ -212,6 +214,7 @@ function setDOMVisibility() {
   }
   console.log('DOM "View" Set.')
   console.groupEnd();
+  return;
 }
 
 function setDOMTextContent() {
@@ -246,8 +249,8 @@ function setDOMTextContent() {
   else {
     console.log('Game Status = Not InSession');
     DOM.mainHeader.innerText = "Welcome to BlackJack!";
-    return;
   }
+  
   console.log('DOM Text Set Accordingly')
   console.groupEnd();
 }
@@ -429,6 +432,7 @@ console.group('Check for End of Game')
       }
     }
   } else { //OR IF PLAYER BUSTS
+   
     console.log("Player Busts = YOU LOSE!");
     gameFlags.inSession = false;
     gameFlags.playerWon = false;
